@@ -14,7 +14,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     sender_name = update.message.from_user.first_name
 
     # Print both to terminal
-    print(f"Meessage from {sender_name}: {message_text}")
+    print(f"Message from {sender_name}: {message_text}")
 
 # Building the bot application using token
 TOKEN = os.getenv("TELEGRAM_TOKEN")
