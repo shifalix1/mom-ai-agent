@@ -1,0 +1,26 @@
+[
+  {
+    "role": "user",
+    "content": "did you eat?"
+  },
+  {
+    "role": "assistant",
+    "content": "haan mumma, i ate already, dont worry \ud83d\ude2d"
+  },
+  {
+    "role": "user",
+    "content": "what did you eat?"
+  },
+  {
+    "role": "assistant",
+    "content": "pasta and sandwich, aree yaar not much \ud83d\ude0a"
+  },
+  {
+    "role": "user",
+    "content": "will you have lunch then or youll skip?"
+  },
+  {
+    "role": "assistant",
+    "content": "thoda light lunch karungi, salad or sandwich or smthn \ud83d\udc85\ud83c\udffb"
+  }
+]
