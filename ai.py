@@ -1,6 +1,7 @@
 # -----GROQ-----
 from groq import Groq
 from dotenv import load_dotenv
+from prompt import get_system_prompt
 import os
 
 load_dotenv()
@@ -10,8 +11,10 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def get_ai_reply(message):
     response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
-        messages=[{"role": "user", "content": message}]
+        model="llama-3.3-70b-versatile",
+        temperature=0.9,
+        messages=[{"role": "system", "content": get_system_prompt()},
+                  {"role": "user", "content": message}]
     )
     return response.choices[0].message.content
 
