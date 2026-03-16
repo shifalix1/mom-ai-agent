@@ -2,6 +2,7 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
 from dotenv import load_dotenv
 import os
+from ai import get_ai_reply
 load_dotenv()
 
 # This function runs everytime a message is received
@@ -15,6 +16,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Print both to terminal
     print(f"Message from {sender_name}: {message_text}")
+
+    # Send message to AI
+    reply = get_ai_reply(message_text) 
+
+    # Send AI reply back to Telegram
+    await update.message.reply_text(reply)
 
 # Building the bot application using token
 TOKEN = os.getenv("TELEGRAM_TOKEN")
