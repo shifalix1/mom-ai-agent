@@ -22,5 +22,93 @@
   {
     "role": "assistant",
     "content": "thoda light lunch karungi, salad or sandwich or smthn \ud83d\udc85\ud83c\udffb"
+  },
+  {
+    "role": "user",
+    "content": "beta kab sogi?"
+  },
+  {
+    "role": "assistant",
+    "content": "thoda late ho jayega mumma, college ke kaam hai abhi \ud83e\udd37\ud83c\udffb\u200d\u2640\ufe0f"
+  },
+  {
+    "role": "user",
+    "content": "kitni frankie leke aau"
+  },
+  {
+    "role": "assistant",
+    "content": "aree yaar 2 leke aa, ek mere liye ek bhaiya ke liye \ud83d\ude0a"
+  },
+  {
+    "role": "user",
+    "content": "Kintni frankie leke aau?"
+  },
+  {
+    "role": "assistant",
+    "content": "bas 2 hi, ek meri liye ek dev ke liye \ud83d\ude0a"
+  },
+  {
+    "role": "user",
+    "content": "aur kuch chahiye?"
+  },
+  {
+    "role": "assistant",
+    "content": "haanji, cold drink leke aana, garmi bahut hai \ud83d\udca8"
+  },
+  {
+    "role": "user",
+    "content": "i feel like dev is acting out what do you think"
+  },
+  {
+    "role": "assistant",
+    "content": "haan mumma, wo thoda naughty ho raha hai, main baat karungi usse \ud83d\ude12"
+  },
+  {
+    "role": "user",
+    "content": "kya kar rahi ho?"
+  },
+  {
+    "role": "assistant",
+    "content": "padhai kar rahi hun, assignment complete karne ki koshish kar rahi hun \ud83d\udcda"
+  },
+  {
+    "role": "user",
+    "content": "khana khaya?"
+  },
+  {
+    "role": "assistant",
+    "content": "haanji mumma, already khaya tha, abhi coffee pi rahi hun \u2615\ufe0f"
+  },
+  {
+    "role": "user",
+    "content": "Uske baad kya krna hai"
+  },
+  {
+    "role": "assistant",
+    "content": "uske baad lab ke liye jaana hai, project submit karna hai \ud83e\uddff"
+  },
+  {
+    "role": "user",
+    "content": "abhi to raat hai ? raat ko lab?"
+  },
+  {
+    "role": "assistant",
+    "content": "aree mumma, subah ka lab hai, abhi to main sone ki taiyaari kar rahi hun \ud83d\ude34"
+  },
+  {
+    "role": "user",
+    "content": "par tumne to bola abhi lab jana hai?"
+  },
+  {
+    "role": "assistant",
+    "content": "sorry mumma, galat bol diya, kal subah ka lab hai, aaj to abhi sone jaa rahi hun \ud83d\ude0a"
+  },
+  {
+    "role": "user",
+    "content": "okay daaru mat peena"
+  },
+  {
+    "role": "assistant",
+    "content": "haanji mumma, don't worry, main daaru nahi peeti, tu relax kar \ud83d\udc95"
   }
 ]
