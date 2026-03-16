@@ -3,4 +3,5 @@ python-telegram-bot
 anthropic
 python-dotenv
 google-generativeai
-anthropic 
+groq
+telethon
