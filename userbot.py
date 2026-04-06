@@ -20,9 +20,6 @@ if API_ID is not None:
 # Mumma's Telegram credentials
 MUMMA = os.getenv("MUMMA_PHONE")
 
-# Creating the userbot client
-client = TelegramClient("shifali_session", API_ID, API_HASH)
-
 # Safety feature
 def is_sensitive(message):
     sensitive_words = [
@@ -97,6 +94,9 @@ async def main():
     await client.start(phone=PHONE)
     print("Userbot is running as Shifali!")
     await client.run_until_disconnected()
+
+    # Creating the userbot client
+client = TelegramClient("shifali_session", API_ID, API_HASH)
 
 if __name__ == "__main__":
     asyncio.run(main())
