@@ -11,8 +11,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat 'set PYTHONPATH=.'
-                bat 'python -m pytest tests/ --html=report.html --self-contained-html -v'
+                bat 'set PYTHONPATH=. && pytest tests/ --html=report.html --self-contained-html -v'
             }
         }
 

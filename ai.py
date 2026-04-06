@@ -12,20 +12,31 @@ load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def get_ai_reply(message):
+    from groq import Groq
+    import os
+
     add_to_memory("user", message)
-    history = load_memory() #[-6:] # limit memory
+    history = load_memory()
 
-    if "time" in message.lower():
-        history = []
+    api_key = os.getenv("GROQ_API_KEY")
 
+    # ✅ If no API key (like in Jenkins), return dummy reply
+    if not api_key:
+        reply = "haanji mumma 😊"
+        add_to_memory("assistant", reply)
+        return reply
+
+    client = Groq(api_key=api_key)
+
+    from datetime import datetime
     current_time = datetime.now().strftime("%H:%M")
 
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
-        temperature=0.7,  # reduce randomness
+        temperature=0.7,
         messages=[
             {"role": "system", "content": get_system_prompt()},
-            {"role": "system", "content": f"Current time is {current_time}. Always answer time questions accurately using this."},
+            {"role": "system", "content": f"Current time is {current_time}"},
             *history
         ]
     )
