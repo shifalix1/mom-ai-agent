@@ -8,22 +8,26 @@ import os
 
 load_dotenv()
 
-# Groq (active)
-#client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+# Groq (active) removed since jenkins was crashing added beneath
 
 def get_ai_reply(message):
     from groq import Groq
     import os
+    from datetime import datetime
 
     add_to_memory("user", message)
     history = load_memory()
 
-    if any(word in message.lower() for word in ["time", "baje", "kitne baje"]):
+    # detect time question
+    is_time_query = any(word in message.lower() for word in ["time", "baje", "kitne baje"])
+
+    # clear memory for time questions
+    if is_time_query:
         history = []
 
     api_key = os.getenv("GROQ_API_KEY")
 
-    # ✅ If no API key (like in Jenkins), return dummy reply
+    # Jenkins fallback (no API key)
     if not api_key:
         reply = "haanji mumma 😊"
         add_to_memory("assistant", reply)
@@ -31,28 +35,30 @@ def get_ai_reply(message):
 
     client = Groq(api_key=api_key)
 
-    from datetime import datetime
     current_time = datetime.now().strftime("%H:%M")
+
+    # build messages properly
+    messages = [
+        {"role": "system", "content": get_system_prompt()}
+    ]
+
+    if is_time_query:
+        messages.append({
+            "role": "system",
+            "content": f"Current time is {current_time}. Answer time questions correctly."
+        })
+
+    messages += history
 
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         temperature=0.7,
-        messages = [
-            {"role": "system", "content": get_system_prompt()}
-        ]
-
-        # Only add time context if needed
-        if any(word in message.lower() for word in ["time", "baje", "kitne baje"]):
-            messages.append({
-                "role": "system",
-                "content": f"Current time is {current_time}. Answer time questions accurately."
-            })
-
-        messages += history
+        messages=messages
     )
 
     reply = response.choices[0].message.content
     add_to_memory("assistant", reply)
+
     return reply
 
 # -----CLAUDE-----
