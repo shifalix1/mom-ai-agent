@@ -18,6 +18,9 @@ def get_ai_reply(message):
     add_to_memory("user", message)
     history = load_memory()
 
+    if any(word in message.lower() for word in ["time", "baje", "kitne baje"]):
+        history = []
+
     api_key = os.getenv("GROQ_API_KEY")
 
     # ✅ If no API key (like in Jenkins), return dummy reply
@@ -34,11 +37,18 @@ def get_ai_reply(message):
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         temperature=0.7,
-        messages=[
-            {"role": "system", "content": get_system_prompt()},
-            {"role": "system", "content": f"Current time is {current_time}"},
-            *history
+        messages = [
+            {"role": "system", "content": get_system_prompt()}
         ]
+
+        # Only add time context if needed
+        if any(word in message.lower() for word in ["time", "baje", "kitne baje"]):
+            messages.append({
+                "role": "system",
+                "content": f"Current time is {current_time}. Answer time questions accurately."
+            })
+
+        messages += history
     )
 
     reply = response.choices[0].message.content
