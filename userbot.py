@@ -35,8 +35,13 @@ def is_sensitive(message):
     ]
     message = message.lower()
     return any(word in message for word in sensitive_words)
+
 # This dictionary tracks pending replies
 pending = {}
+
+# Creating global client (so functions can use it)
+client = None
+
 
 async def delayed_reply(chat_id, message_text):
     # Wait for few minutes before replying
@@ -55,50 +60,64 @@ async def delayed_reply(chat_id, message_text):
         del pending[chat_id]
         print(f"Agent replied: {reply}")
 
-@client.on(events.NewMessage(incoming=True, from_users=MUMMA))
-async def handle_mumma(event):
-    message_text = event.message.text
-    chat_id = event.chat_id
 
-    # CHeck for medias
-    if not message_text:
-        return
-    
-    print(f"Mumma said: {message_text}")
+# Register all handlers AFTER client is created
+def register_handlers():
 
-    # Safety check
-    if is_sensitive(message_text):
-        print("Sensitive message detected - agent staying silent.")
-        return
+    @client.on(events.NewMessage(incoming=True, from_users=MUMMA))
+    async def handle_mumma(event):
+        message_text = event.message.text
+        chat_id = event.chat_id
 
-    # Cancel previous timer if mumma sends another message
-    if chat_id in pending:
-        pending[chat_id].cancel()
+        # CHeck for medias
+        if not message_text:
+            return
+        
+        print(f"Mumma said: {message_text}")
 
-    # Start new timer
-    task = asyncio.create_task(delayed_reply(chat_id, message_text))
-    pending[chat_id] = task
+        # Safety check
+        if is_sensitive(message_text):
+            print("Sensitive message detected - agent staying silent.")
+            return
 
-@client.on(events.NewMessage(outgoing=True))
-async def handle_my_reply(event):
+        # Cancel previous timer if mumma sends another message
+        if chat_id in pending:
+            pending[chat_id].cancel()
 
-    # If Shifali replies manually, cancel the agent timer
-    print("Shifali replied manually, cancelling agent...")
+        # Start new timer
+        task = asyncio.create_task(delayed_reply(chat_id, message_text))
+        pending[chat_id] = task
 
-    for task in pending.values():
-        task.cancel()   # Cancel the task
 
-    pending.clear()     # Empty the dictionary
+    @client.on(events.NewMessage(outgoing=True))
+    async def handle_my_reply(event):
+
+        # If Shifali replies manually, cancel the agent timer
+        print("Shifali replied manually, cancelling agent...")
+
+        for task in pending.values():
+            task.cancel()   # Cancel the task
+
+        pending.clear()     # Empty the dictionary
+
 
 async def main():
     global client
 
     # Creating the userbot client
-    client = TelegramClient("shifali_session", API_ID, API_HASH)    
+    if not API_ID or not API_HASH:
+        print("Missing Telegram credentials. Skipping bot startup.")
+        return
+
+    client = TelegramClient("shifali_session", API_ID, API_HASH)
+
+    # Register handlers after client exists
+    register_handlers()
 
     await client.start(phone=PHONE)
     print("Userbot is running as Shifali!")
     await client.run_until_disconnected()
+
 
 if __name__ == "__main__":
     asyncio.run(main())
