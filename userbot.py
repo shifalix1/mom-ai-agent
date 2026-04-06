@@ -94,4 +94,5 @@ async def main():
     print("Userbot is running as Shifali!")
     await client.run_until_disconnected()
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
