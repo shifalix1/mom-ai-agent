@@ -6,7 +6,13 @@ from memory import load_memory, add_to_memory
 from datetime import datetime
 import os
 
-client = None
+class Dummy:
+    pass
+
+client = Dummy()
+client.chat = Dummy()
+client.chat.completions = Dummy()
+client.chat.completions.create = None
 
 load_dotenv()
 
