@@ -9,7 +9,7 @@ import os
 load_dotenv()
 
 # Groq (active)
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+#client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def get_ai_reply(message):
     from groq import Groq
