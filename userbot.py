@@ -9,11 +9,12 @@ import random
 load_dotenv()
 
 # Load credentials from .env
-API_ID = int(os.getenv("TELEGRAM_API_ID"))
+API_ID = os.getenv("TELEGRAM_API_ID")
 API_HASH = os.getenv("TELEGRAM_API_HASH")
 PHONE = os.getenv("TELEGRAM_PHONE")
-# JENKINS SAFE FALLBACK
-if API_ID:
+
+# Prevent crash in Jenkins
+if API_ID is not None:
     API_ID = int(API_ID)
 
 # Mumma's Telegram credentials
