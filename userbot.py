@@ -12,6 +12,9 @@ load_dotenv()
 API_ID = int(os.getenv("TELEGRAM_API_ID"))
 API_HASH = os.getenv("TELEGRAM_API_HASH")
 PHONE = os.getenv("TELEGRAM_PHONE")
+# JENKINS SAFE FALLBACK
+if API_ID:
+    API_ID = int(API_ID)
 
 # Mumma's Telegram credentials
 MUMMA = os.getenv("MUMMA_PHONE")
